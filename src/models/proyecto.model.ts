@@ -19,13 +19,13 @@ export class Proyecto extends Entity {
     type: 'string',
     required: true,
   })
-  Nombre: string;
+  Descripcion: string;
 
   @property({
-    type: 'string',
+    type: 'object',
     required: true,
   })
-  Descripcion: string;
+  Imagen: object;
 
 
   constructor(data?: Partial<Proyecto>) {

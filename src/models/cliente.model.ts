@@ -28,10 +28,16 @@ export class Cliente extends Entity {
   Apellido: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   Fecha_nacimiento: string;
+
+  @property({
+    type: 'object',
+    required: true,
+  })
+  Fotografia: object;
 
   @property({
     type: 'number',
