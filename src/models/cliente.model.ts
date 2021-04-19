@@ -1,7 +1,7 @@
-import {Entity, model, property, belongsTo, hasOne} from '@loopback/repository';
+import {belongsTo, Entity, hasOne, model, property} from '@loopback/repository';
 import {Ciudad} from './ciudad.model';
-import {Solicitud} from './solicitud.model';
 import {InfoFinanciera} from './info-financiera.model';
+import {Solicitud} from './solicitud.model';
 
 @model({
   settings: {
@@ -11,6 +11,12 @@ import {InfoFinanciera} from './info-financiera.model';
         entity: 'Solicitud',
         entityKey: 'Id_solicitud',
         foreignKey: 'solicitudId',
+      },
+      fk_infofinanciera_id: {
+        name: 'fk_infofinanciera_id',
+        entity: 'Info-financiera',
+        entityKey: 'Id_financiera',
+        foreignKey: 'infoFinancieraId',
       },
       fk_ciudad_id: {
         name: 'fk_ciudad_id',
