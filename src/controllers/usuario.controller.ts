@@ -22,16 +22,19 @@ import {
   requestBody,
   response
 } from '@loopback/rest';
+import {Keys as llaves} from '../config/keys';
 import {Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
-import {FuncionesGeneralesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService} from '../services';
 
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
     public usuarioRepository: UsuarioRepository,
     @service(FuncionesGeneralesService)
-    public servicioFunciones: FuncionesGeneralesService
+    public servicioFunciones: FuncionesGeneralesService,
+    @service(NotificacionesService)
+    public servicioNotificaciones: NotificacionesService
   ) { }
 
   @post('/usuarios')
@@ -59,7 +62,26 @@ export class UsuarioController {
     console.log(claveCifrada)
 
     usuario.Contrasena = claveCifrada
-    return this.usuarioRepository.create(usuario);
+    let usuarioCreado = await this.usuarioRepository.create(usuario);
+    if (usuarioCreado) {
+
+      let contenido = `Hola, buen día. <br/>Usted fue registrado en la plataforma de la constructora. Sus credenciales de acceso son: <br/>
+      <ul>
+        <li>Usuario: ${usuarioCreado.Nombre}</li>
+        <li>Contraseña: ${claveAleatoria}</li>
+      </ul>
+
+      Gracias por confiar en esta constructora.
+      `;
+
+
+      this.servicioNotificaciones.EnviarCorreoElectronico(usuarioCreado.Correo, llaves.asuntoNuevoUsuario, contenido);
+    }
+
+
+    return usuarioCreado
+
+
   }
 
   @get('/usuarios/count')
