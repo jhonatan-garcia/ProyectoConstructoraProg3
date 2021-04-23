@@ -9,7 +9,7 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param,
+  getModelSchemaRef, HttpErrors, param,
 
 
   patch, post,
@@ -23,9 +23,9 @@ import {
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {Usuario} from '../models';
+import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
-import {FuncionesGeneralesService, NotificacionesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
 export class UsuarioController {
   constructor(
@@ -34,7 +34,9 @@ export class UsuarioController {
     @service(FuncionesGeneralesService)
     public servicioFunciones: FuncionesGeneralesService,
     @service(NotificacionesService)
-    public servicioNotificaciones: NotificacionesService
+    public servicioNotificaciones: NotificacionesService,
+    @service(SesionService)
+    public servicioSesion: SesionService
   ) { }
 
   @post('/usuarios')
@@ -78,10 +80,35 @@ export class UsuarioController {
       this.servicioNotificaciones.EnviarCorreoElectronico(usuarioCreado.Correo, llaves.asuntoNuevoUsuario, contenido);
     }
 
-
     return usuarioCreado
+  }
 
-
+  @post('/identificar-usuario')
+  async validar(
+    @requestBody(
+      {
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Credenciales)
+          }
+        }
+      }
+    )
+    credenciales: Credenciales
+  ): Promise<object> {
+    let usuario = await this.usuarioRepository.findOne({where: {Nombre: credenciales.nombre_usuario, Contrasena: credenciales.clave}});
+    if (usuario) {
+      let token = this.servicioSesion.GenerarToken(usuario);
+      return {
+        user: {
+          username: usuario.Nombre,
+          role: usuario.Contrasena
+        },
+        tk: token
+      };
+    } else {
+      throw new HttpErrors[401]("Las credenciales no son correctas");
+    }
   }
 
   @get('/usuarios/count')
