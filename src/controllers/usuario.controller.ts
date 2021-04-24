@@ -102,7 +102,7 @@ export class UsuarioController {
       return {
         user: {
           username: usuario.Nombre,
-          role: usuario.Contrasena
+          role: usuario.Rol
         },
         tk: token
       };
