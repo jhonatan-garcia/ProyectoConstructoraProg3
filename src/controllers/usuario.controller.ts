@@ -69,7 +69,7 @@ export class UsuarioController {
 
       let contenido = `Hola, buen día. <br/>Usted fue registrado en la plataforma de la constructora. Sus credenciales de acceso son: <br/>
       <ul>
-        <li>Usuario: ${usuarioCreado.Nombre}</li>
+        <li>Usuario: ${usuarioCreado.Correo}</li>
         <li>Contraseña: ${claveAleatoria}</li>
       </ul>
 
@@ -96,12 +96,12 @@ export class UsuarioController {
     )
     credenciales: Credenciales
   ): Promise<object> {
-    let usuario = await this.usuarioRepository.findOne({where: {Nombre: credenciales.nombre_usuario, Contrasena: credenciales.clave}});
+    let usuario = await this.usuarioRepository.findOne({where: {Correo: credenciales.nombre_usuario, Contrasena: credenciales.clave}});
     if (usuario) {
       let token = this.servicioSesion.GenerarToken(usuario);
       return {
         user: {
-          username: usuario.Nombre,
+          username: usuario.Correo,
           role: usuario.Rol
         },
         tk: token

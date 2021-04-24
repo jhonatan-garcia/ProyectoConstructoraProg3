@@ -14,7 +14,7 @@ export class SesionService {
     let tk = jwt.sign({
       exp: llaves.tiempoVencimientoJWT,
       data: {
-        username: usuario.Nombre,
+        username: usuario.Correo,
         role: usuario.Rol
       }
     }, llaves.claveSecretaJWT);
