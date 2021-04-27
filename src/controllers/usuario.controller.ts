@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -27,6 +28,7 @@ import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
+//@authenticate('admin')
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
@@ -111,6 +113,7 @@ export class UsuarioController {
     }
   }
 
+  //@authenticate.skip()
   @get('/usuarios/count')
   @response(200, {
     description: 'Usuario model count',
@@ -122,6 +125,7 @@ export class UsuarioController {
     return this.usuarioRepository.count(where);
   }
 
+  //@authenticate.skip()
   @get('/usuarios')
   @response(200, {
     description: 'Array of Usuario model instances',
