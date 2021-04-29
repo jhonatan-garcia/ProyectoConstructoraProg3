@@ -28,3 +28,4 @@ export * from './cliente.controller';
 export * from './info-financiera.controller';
 export * from './pais.controller';
 export * from './cargar-archivo.controller';
+export * from './descarga-archivos.controller';
