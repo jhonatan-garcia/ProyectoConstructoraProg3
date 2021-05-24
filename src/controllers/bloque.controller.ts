@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,6 +21,7 @@ import {
 import {Bloque} from '../models';
 import {BloqueRepository} from '../repositories';
 
+@authenticate('admin')
 export class BloqueController {
   constructor(
     @repository(BloqueRepository)
@@ -47,6 +49,7 @@ export class BloqueController {
     return this.bloqueRepository.create(bloque);
   }
 
+  @authenticate.skip()
   @get('/bloques/count')
   @response(200, {
     description: 'Bloque model count',
@@ -58,6 +61,7 @@ export class BloqueController {
     return this.bloqueRepository.count(where);
   }
 
+  @authenticate.skip()
   @get('/bloques')
   @response(200, {
     description: 'Array of Bloque model instances',

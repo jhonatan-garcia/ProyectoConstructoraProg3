@@ -1,5 +1,5 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
-/*import {authenticate} from '@loopback/authentication';*/
 import {
   Count,
   CountSchema,
@@ -28,7 +28,7 @@ import {Credenciales, ResetearClave, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
-//@authenticate('admin')
+@authenticate('admin')
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
@@ -73,6 +73,7 @@ export class UsuarioController {
       <ul>
         <li>Usuario: ${usuarioCreado.Correo}</li>
         <li>Contraseña: ${claveAleatoria}</li>
+        <li>Rol: ${usuarioCreado.Rol}</li>
       </ul>
 
       Gracias por confiar en esta constructora.
@@ -121,6 +122,8 @@ export class UsuarioController {
       envio: "OK"
     };
   }
+
+  @authenticate.skip()
   @post('/identificar-usuario')
   async validar(
     @requestBody(
@@ -149,7 +152,7 @@ export class UsuarioController {
     }
   }
 
-  //@authenticate.skip()
+  @authenticate.skip()
   @get('/usuarios/count')
   @response(200, {
     description: 'Usuario model count',
@@ -161,7 +164,7 @@ export class UsuarioController {
     return this.usuarioRepository.count(where);
   }
 
-  //@authenticate.skip()
+  @authenticate.skip()
   @get('/usuarios')
   @response(200, {
     description: 'Array of Usuario model instances',
