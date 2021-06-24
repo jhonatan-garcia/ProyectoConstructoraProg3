@@ -1,6 +1,6 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Inmueble} from './inmueble.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Cliente} from './cliente.model';
+import {Inmueble} from './inmueble.model';
 import {Pago} from './pago.model';
 
 @model({

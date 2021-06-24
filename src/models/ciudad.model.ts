@@ -1,7 +1,7 @@
 import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {Cliente} from './cliente.model';
 import {Pais} from './pais.model';
 import {Proyecto} from './proyecto.model';
-import {Cliente} from './cliente.model';
 
 @model({
   settings: {
