@@ -60,16 +60,16 @@ export class UsuarioController {
     usuario: Omit<Usuario, 'Id_usuario'>,
   ): Promise<Usuario> {
 
-    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria()
+    const claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria()
     console.log(claveAleatoria)
-    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria)
+    const claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria)
     console.log(claveCifrada)
 
     usuario.Contrasena = claveCifrada
-    let usuarioCreado = await this.usuarioRepository.create(usuario);
+    const usuarioCreado = await this.usuarioRepository.create(usuario);
     if (usuarioCreado) {
 
-      let contenido = `Hola, buen día. <br/>Usted fue registrado en la plataforma de la constructora. Sus credenciales de acceso son: <br/>
+      const contenido = `Hola, buen día. <br/>Usted fue registrado en la plataforma de la constructora. Sus credenciales de acceso son: <br/>
       <ul>
         <li>Usuario: ${usuarioCreado.Correo}</li>
         <li>Contraseña: ${claveAleatoria}</li>
@@ -102,19 +102,19 @@ export class UsuarioController {
     resetearClave: ResetearClave,
   ): Promise<Object> {
 
-    let usuario = await this.usuarioRepository.findOne({where: {Correo: resetearClave.correo}})
+    const usuario = await this.usuarioRepository.findOne({where: {Correo: resetearClave.correo}})
 
     if (!usuario) {
       throw new HttpErrors[401]("Este usuario no existe");
     }
-    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria()
+    const claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria()
     console.log(claveAleatoria)
-    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria)
+    const claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria)
     console.log(claveCifrada)
 
     usuario.Contrasena = claveCifrada
     await this.usuarioRepository.update(usuario);
-    let contenido = `Hola, sus datos son: Usuario: ${usuario.Correo} y Contraseña: ${claveAleatoria}.
+    const contenido = `Hola, sus datos son: Usuario: ${usuario.Correo} y Contraseña: ${claveAleatoria}.
       `;
 
     this.servicioNotificaciones.EnviarNotificacionPorSMS('+57' + usuario.Celular.toString(), contenido);
@@ -137,18 +137,20 @@ export class UsuarioController {
     )
     credenciales: Credenciales
   ): Promise<object> {
-    let usuario = await this.usuarioRepository.findOne({where: {Correo: credenciales.nombre_usuario, Contrasena: credenciales.clave}});
+    const usuario = await this.usuarioRepository.findOne({where: {Correo: credenciales.nombre_usuario, Contrasena: credenciales.clave}});
     if (usuario) {
-      let token = this.servicioSesion.GenerarToken(usuario);
+      const token = this.servicioSesion.GenerarToken(usuario);
       return {
-        user: {
-          username: usuario.Correo,
-          role: usuario.Rol
-        },
+
+        username: usuario.Correo,
+        Nombre: usuario.Nombre,
+        Apellido: usuario.Apellido,
+        Rol: usuario.Rol,
         tk: token
       };
     } else {
       throw new HttpErrors[401]("Las credenciales no son correctas");
+
     }
   }
 
@@ -164,7 +166,7 @@ export class UsuarioController {
     return this.usuarioRepository.count(where);
   }
 
-  @authenticate.skip()
+
   @get('/usuarios')
   @response(200, {
     description: 'Array of Usuario model instances',

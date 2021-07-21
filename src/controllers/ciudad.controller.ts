@@ -53,7 +53,7 @@ export class CiudadController {
     return this.ciudadRepository.create(ciudad);
   }
 
-  @authenticate.skip()
+  //@authenticate.skip()
   @get('/ciudades/count')
   @response(200, {
     description: 'Ciudad model count',
