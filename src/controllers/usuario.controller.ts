@@ -24,7 +24,7 @@ import {
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {Credenciales, ResetearClave, Usuario} from '../models';
+import {CambiarClave, Credenciales, ResetearClave, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
@@ -121,6 +121,39 @@ export class UsuarioController {
     return {
       envio: "OK"
     };
+  }
+  @authenticate.skip()
+  @post('/cambiar-clave')
+  @response(200, {
+    content: {'application/json': {schema: getModelSchemaRef(CambiarClave)}},
+  })
+  async cambiarClave(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(CambiarClave),
+        },
+      },
+    })
+    cambiarClave: CambiarClave,
+  ): Promise<any> {
+    const usuario = await this.usuarioRepository.findById(cambiarClave.Id_usuario);
+
+    if (!usuario) {
+      throw new HttpErrors[401]("Este usuario no existe");
+
+    }
+
+    if (this.servicioFunciones.CifrarTexto1(cambiarClave.Contraseña) == usuario.Contrasena) {
+      const claveCifrada = this.servicioFunciones.CifrarTexto1(cambiarClave.ContraseñaNueva)
+      console.log(claveCifrada)
+      usuario.Contrasena = claveCifrada;
+      await this.usuarioRepository.update(usuario);
+    } else {
+      throw new HttpErrors[401]("Contraseña actual incorrecta")
+    }
+
+
   }
 
   @authenticate.skip()

@@ -25,4 +25,9 @@ export class FuncionesGeneralesService {
     return textoCifrado;
   }
 
+  CifrarTexto1(texto: any): string {
+    let textoCifrado = Crypto.MD5(texto).toString()
+    return textoCifrado;
+  }
+
 }
