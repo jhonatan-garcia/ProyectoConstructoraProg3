@@ -86,7 +86,7 @@ export class UsuarioController {
     return usuarioCreado
   }
 
-
+  @authenticate.skip()
   @post('/rest-password')
   @response(200, {
     content: {'application/json': {schema: getModelSchemaRef(ResetearClave)}},
