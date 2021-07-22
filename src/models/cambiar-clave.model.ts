@@ -13,13 +13,13 @@ export class CambiarClave extends Model {
     type: 'string',
     required: true,
   })
-  Contraseña?: string;
+  Contrasena?: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  ContraseñaNueva?: string;
+  ContrasenaNueva?: string;
 
   constructor(data?: Partial<CambiarClave>) {
     super(data);

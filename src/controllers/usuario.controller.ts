@@ -144,8 +144,8 @@ export class UsuarioController {
 
     }
 
-    if (this.servicioFunciones.CifrarTexto1(cambiarClave.Contraseña) == usuario.Contrasena) {
-      const claveCifrada = this.servicioFunciones.CifrarTexto1(cambiarClave.ContraseñaNueva)
+    if (this.servicioFunciones.CifrarTexto1(cambiarClave.Contrasena) == usuario.Contrasena) {
+      const claveCifrada = this.servicioFunciones.CifrarTexto1(cambiarClave.ContrasenaNueva)
       console.log(claveCifrada)
       usuario.Contrasena = claveCifrada;
       await this.usuarioRepository.update(usuario);
