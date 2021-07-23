@@ -5,28 +5,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Bloque} from '../models';
 import {BloqueRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class BloqueController {
   constructor(
     @repository(BloqueRepository)
-    public bloqueRepository : BloqueRepository,
-  ) {}
+    public bloqueRepository: BloqueRepository,
+  ) { }
 
   @post('/bloques')
   @response(200, {

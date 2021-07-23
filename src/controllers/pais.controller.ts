@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -53,7 +52,7 @@ export class PaisController {
     return this.paisRepository.create(pais);
   }
 
-  @authenticate.skip()
+  //@authenticate.skip()
   @get('/paises/count')
   @response(200, {
     description: 'Pais model count',
@@ -65,7 +64,7 @@ export class PaisController {
     return this.paisRepository.count(where);
   }
 
-  @authenticate.skip()
+  //@authenticate.skip()
   @get('/paises')
   @response(200, {
     description: 'Array of Pais model instances',
