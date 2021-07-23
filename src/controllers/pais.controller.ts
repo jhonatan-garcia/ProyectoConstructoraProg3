@@ -25,7 +25,7 @@ import {
 import {Pais} from '../models';
 import {PaisRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class PaisController {
   constructor(
     @repository(PaisRepository)
