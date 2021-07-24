@@ -174,7 +174,7 @@ export class UsuarioController {
     if (usuario) {
       const token = this.servicioSesion.GenerarToken(usuario);
       return {
-
+        Id_usuario: usuario.Id_usuario,
         username: usuario.Correo,
         Nombre: usuario.Nombre,
         Apellido: usuario.Apellido,
