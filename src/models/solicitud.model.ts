@@ -12,12 +12,6 @@ import {Pago} from './pago.model';
         entityKey: 'Id_inmueble',
         foreignKey: 'inmuebleId',
       },
-      fk_cliente_id: {
-        name: 'fk_cliente_id',
-        entity: 'Cliente',
-        entityKey: 'Id_cliente',
-        foreignKey: 'clienteId',
-      },
     },
   },
 })
@@ -50,7 +44,7 @@ export class Solicitud extends Entity {
   @belongsTo(() => Inmueble)
   inmuebleId: number;
 
-  @belongsTo(() => Cliente)
+  @hasMany(() => Cliente)
   clientes: Cliente[];
 
   @hasMany(() => Pago)

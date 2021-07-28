@@ -1,10 +1,23 @@
-import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {belongsTo, Entity, hasOne, model, property} from '@loopback/repository';
 import {Ciudad} from './ciudad.model';
+import {InfoFinanciera} from './info-financiera.model';
 import {Solicitud} from './solicitud.model';
 
 @model({
   settings: {
     foreignKeys: {
+      fk_solicitud_id: {
+        name: 'fk_solicitud_id',
+        entity: 'Solicitud',
+        entityKey: 'Id_solicitud',
+        foreignKey: 'solicitudId',
+      },
+      fk_infofinanciera_id: {
+        name: 'fk_infofinanciera_id',
+        entity: 'Info-financiera',
+        entityKey: 'Id_financiera',
+        foreignKey: 'infoFinancieraId',
+      },
       fk_ciudad_id: {
         name: 'fk_ciudad_id',
         entity: 'Ciudad',
@@ -79,9 +92,11 @@ export class Cliente extends Entity {
   @belongsTo(() => Ciudad)
   ciudadId: number;
 
-  @hasMany(() => Solicitud)
+  @belongsTo(() => Solicitud)
   solicitudId: number;
 
+  @hasOne(() => InfoFinanciera)
+  infoFinanciera: InfoFinanciera;
 
   @property({
     type: 'number',
