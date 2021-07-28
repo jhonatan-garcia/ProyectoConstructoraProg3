@@ -35,10 +35,10 @@ export class Proyecto extends Entity {
   Descripcion: string;
 
   @property({
-    type: 'object',
+    type: 'string',
     required: true,
   })
-  Imagen: object;
+  Imagen: string;
 
   @belongsTo(() => Ciudad, {name: 'ciudadProyecto'})
   ciudad: number;
