@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -24,7 +25,7 @@ import {
 import {Pais} from '../models';
 import {PaisRepository} from '../repositories';
 
-//@authenticate('admin')
+@authenticate('admin')
 export class PaisController {
   constructor(
     @repository(PaisRepository)
@@ -52,7 +53,7 @@ export class PaisController {
     return this.paisRepository.create(pais);
   }
 
-  //@authenticate.skip()
+  @authenticate.skip()
   @get('/paises/count')
   @response(200, {
     description: 'Pais model count',
@@ -64,7 +65,7 @@ export class PaisController {
     return this.paisRepository.count(where);
   }
 
-  //@authenticate.skip()
+  @authenticate.skip()
   @get('/paises')
   @response(200, {
     description: 'Array of Pais model instances',
@@ -101,7 +102,7 @@ export class PaisController {
   ): Promise<Count> {
     return this.paisRepository.updateAll(pais, where);
   }
-
+  @authenticate.skip()
   @get('/paises/{id}')
   @response(200, {
     description: 'Pais model instance',

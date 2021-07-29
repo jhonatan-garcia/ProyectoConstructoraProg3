@@ -42,7 +42,7 @@ export class InfoFinancieraController {
   ): Promise<InfoFinanciera> {
     return this.infoFinancieraRepository.create(infoFinanciera);
   }
-
+  @authenticate.skip()
   @get('/info-financieras/count')
   @response(200, {
     description: 'InfoFinanciera model count',
@@ -53,7 +53,7 @@ export class InfoFinancieraController {
   ): Promise<Count> {
     return this.infoFinancieraRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/info-financieras')
   @response(200, {
     description: 'Array of InfoFinanciera model instances',
@@ -90,7 +90,7 @@ export class InfoFinancieraController {
   ): Promise<Count> {
     return this.infoFinancieraRepository.updateAll(infoFinanciera, where);
   }
-
+  @authenticate.skip()
   @get('/info-financieras/{id}')
   @response(200, {
     description: 'InfoFinanciera model instance',

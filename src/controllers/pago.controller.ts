@@ -5,28 +5,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Pago} from '../models';
 import {PagoRepository} from '../repositories';
 
-@authenticate('admin')
+@authenticate('vend')
 export class PagoController {
   constructor(
     @repository(PagoRepository)
-    public pagoRepository : PagoRepository,
-  ) {}
+    public pagoRepository: PagoRepository,
+  ) { }
 
   @post('/pagos')
   @response(200, {
@@ -48,7 +42,7 @@ export class PagoController {
   ): Promise<Pago> {
     return this.pagoRepository.create(pago);
   }
-
+  @authenticate.skip()
   @get('/pagos/count')
   @response(200, {
     description: 'Pago model count',
@@ -59,7 +53,7 @@ export class PagoController {
   ): Promise<Count> {
     return this.pagoRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/pagos')
   @response(200, {
     description: 'Array of Pago model instances',
@@ -96,7 +90,7 @@ export class PagoController {
   ): Promise<Count> {
     return this.pagoRepository.updateAll(pago, where);
   }
-
+  @authenticate.skip()
   @get('/pagos/{id}')
   @response(200, {
     description: 'Pago model instance',

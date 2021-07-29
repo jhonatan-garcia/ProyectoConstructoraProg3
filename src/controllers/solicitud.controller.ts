@@ -5,28 +5,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Solicitud} from '../models';
 import {SolicitudRepository} from '../repositories';
 
-@authenticate('admin')
+@authenticate('vend')
 export class SolicitudController {
   constructor(
     @repository(SolicitudRepository)
-    public solicitudRepository : SolicitudRepository,
-  ) {}
+    public solicitudRepository: SolicitudRepository,
+  ) { }
 
   @post('/solicitudes')
   @response(200, {
@@ -49,6 +43,7 @@ export class SolicitudController {
     return this.solicitudRepository.create(solicitud);
   }
 
+  @authenticate.skip()
   @get('/solicitudes/count')
   @response(200, {
     description: 'Solicitud model count',
@@ -60,6 +55,7 @@ export class SolicitudController {
     return this.solicitudRepository.count(where);
   }
 
+  @authenticate.skip()
   @get('/solicitudes')
   @response(200, {
     description: 'Array of Solicitud model instances',
@@ -97,6 +93,7 @@ export class SolicitudController {
     return this.solicitudRepository.updateAll(solicitud, where);
   }
 
+  @authenticate.skip()
   @get('/solicitudes/{id}')
   @response(200, {
     description: 'Solicitud model instance',

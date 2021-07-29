@@ -41,6 +41,7 @@ export class UsuarioController {
     public servicioSesion: SesionService
   ) { }
 
+
   @post('/usuarios')
   @response(200, {
     description: 'Usuario model instance',
@@ -198,8 +199,7 @@ export class UsuarioController {
   ): Promise<Count> {
     return this.usuarioRepository.count(where);
   }
-
-
+  @authenticate.skip()
   @get('/usuarios')
   @response(200, {
     description: 'Array of Usuario model instances',
@@ -237,6 +237,7 @@ export class UsuarioController {
     return this.usuarioRepository.updateAll(usuario, where);
   }
 
+  @authenticate.skip()
   @get('/usuarios/{id}')
   @response(200, {
     description: 'Usuario model instance',

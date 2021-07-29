@@ -15,7 +15,7 @@ import {
 import {Inmueble} from '../models';
 import {InmuebleRepository} from '../repositories';
 
-//@authenticate('admin')
+@authenticate('admin')
 export class InmuebleController {
   constructor(
     @repository(InmuebleRepository)
@@ -93,6 +93,7 @@ export class InmuebleController {
     return this.inmuebleRepository.updateAll(inmueble, where);
   }
 
+  @authenticate.skip()
   @get('/inmuebles/{id}')
   @response(200, {
     description: 'Inmueble model instance',

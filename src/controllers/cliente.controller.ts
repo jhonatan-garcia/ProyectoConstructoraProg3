@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -14,7 +15,7 @@ import {
 import {Cliente} from '../models';
 import {ClienteRepository} from '../repositories';
 
-
+@authenticate('vend')
 export class ClienteController {
   constructor(
     @repository(ClienteRepository)
@@ -42,6 +43,7 @@ export class ClienteController {
     return this.clienteRepository.create(cliente);
   }
 
+  @authenticate.skip()
   @get('/clientes/count')
   @response(200, {
     description: 'Cliente model count',
@@ -90,6 +92,7 @@ export class ClienteController {
     return this.clienteRepository.updateAll(cliente, where);
   }
 
+  @authenticate.skip()
   @get('/clientes/{id}')
   @response(200, {
     description: 'Cliente model instance',

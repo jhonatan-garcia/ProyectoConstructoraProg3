@@ -25,7 +25,7 @@ import {
 import {Ciudad} from '../models';
 import {CiudadRepository} from '../repositories';
 
-//@authenticate('admin')
+@authenticate('admin')
 export class CiudadController {
   constructor(
     @repository(CiudadRepository)
@@ -53,7 +53,7 @@ export class CiudadController {
     return this.ciudadRepository.create(ciudad);
   }
 
-  //@authenticate.skip()
+  @authenticate.skip()
   @get('/ciudades/count')
   @response(200, {
     description: 'Ciudad model count',
@@ -103,6 +103,7 @@ export class CiudadController {
     return this.ciudadRepository.updateAll(ciudad, where);
   }
 
+  @authenticate.skip()
   @get('/ciudades/{id}')
   @response(200, {
     description: 'Ciudad model instance',

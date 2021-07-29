@@ -15,7 +15,7 @@ import {
 import {Bloque} from '../models';
 import {BloqueRepository} from '../repositories';
 
-//@authenticate('admin')
+@authenticate('admin')
 export class BloqueController {
   constructor(
     @repository(BloqueRepository)
@@ -93,6 +93,7 @@ export class BloqueController {
     return this.bloqueRepository.updateAll(bloque, where);
   }
 
+  @authenticate.skip()
   @get('/bloques/{id}')
   @response(200, {
     description: 'Bloque model instance',

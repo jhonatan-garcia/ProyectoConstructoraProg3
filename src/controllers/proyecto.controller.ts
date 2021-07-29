@@ -25,7 +25,7 @@ import {
 import {Proyecto} from '../models';
 import {ProyectoRepository} from '../repositories';
 
-//@authenticate('admin')
+@authenticate('ven')
 export class ProyectoController {
   constructor(
     @repository(ProyectoRepository)
@@ -102,7 +102,7 @@ export class ProyectoController {
   ): Promise<Count> {
     return this.proyectoRepository.updateAll(proyecto, where);
   }
-
+  @authenticate.skip()
   @get('/proyectos/{id}')
   @response(200, {
     description: 'Proyecto model instance',
