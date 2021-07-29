@@ -5,28 +5,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {InfoFinanciera} from '../models';
 import {InfoFinancieraRepository} from '../repositories';
 
-@authenticate('admin')
+@authenticate('vend')
 export class InfoFinancieraController {
   constructor(
     @repository(InfoFinancieraRepository)
-    public infoFinancieraRepository : InfoFinancieraRepository,
-  ) {}
+    public infoFinancieraRepository: InfoFinancieraRepository,
+  ) { }
 
   @post('/info-financieras')
   @response(200, {

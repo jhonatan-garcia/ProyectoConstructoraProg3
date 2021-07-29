@@ -60,10 +60,10 @@ export class Cliente extends Entity {
   Fecha_nacimiento: string;
 
   @property({
-    type: 'object',
+    type: 'string',
     required: true,
   })
-  Fotografia: object;
+  Fotografia: string;
 
   @property({
     type: 'number',
@@ -85,9 +85,9 @@ export class Cliente extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+    required: false,
   })
-  Contrasena: string;
+  Contrasena?: string;
 
   @belongsTo(() => Ciudad)
   ciudadId: number;
